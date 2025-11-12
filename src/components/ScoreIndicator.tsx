@@ -37,7 +37,7 @@ export function ScoreIndicator({ score, size = "md", showLabel = true }: ScoreIn
         <div
           className={`${sizeClasses[size]} transition-all duration-500 ease-out rounded-full`}
           style={{
-            width: `${score}%`,
+            width: `${score * 100}%`,
             backgroundColor: `hsl(var(--${getMatchScoreCategory(score).color}))`,
           }}
         />
