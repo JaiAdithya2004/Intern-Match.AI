@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { ScoreIndicator } from "./ScoreIndicator";
 import { DomainBadge } from "./DomainBadge";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, DollarSign, Users, Bookmark } from "lucide-react";
+import { MapPin, Users, Bookmark } from "lucide-react";
 import { Recommendation } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 
@@ -50,7 +50,7 @@ export function RecommendationCard({ recommendation, onClick }: RecommendationCa
         {/* Details */}
         <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-1">
-            <DollarSign className="h-4 w-4" />
+            <span className="text-base">₹</span>
             <span>₹{recommendation.stipend.toLocaleString()}</span>
           </div>
           <div className="flex items-center gap-1">

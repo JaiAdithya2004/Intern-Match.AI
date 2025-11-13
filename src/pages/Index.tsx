@@ -27,6 +27,7 @@ const Index = () => {
   const [topK, setTopK] = useState(10);
   const [sortBy, setSortBy] = useState<"score" | "rank" | "stipend">("score");
   const [selectedRecommendation, setSelectedRecommendation] = useState<Recommendation | null>(null);
+  const [showDetails, setShowDetails] = useState(false);
 
   const { data: studentsData } = useQuery({
     queryKey: ["students"],
@@ -188,7 +189,7 @@ const Index = () => {
       </div>
 
       {/* Detail Modal */}
-      <Dialog open={!!selectedRecommendation} onOpenChange={() => setSelectedRecommendation(null)}>
+      <Dialog open={!!selectedRecommendation} onOpenChange={() => { setSelectedRecommendation(null); setShowDetails(false); }}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-card">
           <DialogHeader>
             <DialogTitle className="text-2xl">
@@ -211,7 +212,7 @@ const Index = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex items-center gap-2 text-foreground">
-                  <DollarSign className="h-5 w-5 text-muted-foreground" />
+                  <span className="h-5 w-5 text-muted-foreground text-lg">₹</span>
                   <div>
                     <p className="text-sm text-muted-foreground">Stipend</p>
                     <p className="font-semibold">₹{selectedRecommendation.stipend.toLocaleString()}/month</p>
@@ -233,27 +234,34 @@ const Index = () => {
                 </div>
               </div>
 
-              <div className="space-y-4 border-t pt-4">
-                <div>
-                  <h4 className="text-sm font-semibold mb-2">Description</h4>
-                  <p className="text-sm text-muted-foreground">{selectedRecommendation.description}</p>
+              {showDetails && (
+                <div className="space-y-4 border-t pt-4">
+                  <div>
+                    <h4 className="text-sm font-semibold mb-2">Description</h4>
+                    <p className="text-sm text-muted-foreground">{selectedRecommendation.description}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold mb-2">Required Skills</h4>
+                    <p className="text-sm text-muted-foreground">{selectedRecommendation.required_skills}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold mb-2">Age Requirements</h4>
+                    <p className="text-sm text-muted-foreground">{selectedRecommendation.min_age} - {selectedRecommendation.max_age} years</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-sm font-semibold mb-2">Required Skills</h4>
-                  <p className="text-sm text-muted-foreground">{selectedRecommendation.required_skills}</p>
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold mb-2">Age Requirements</h4>
-                  <p className="text-sm text-muted-foreground">{selectedRecommendation.min_age} - {selectedRecommendation.max_age} years</p>
-                </div>
-              </div>
+              )}
 
               <div className="flex gap-3">
                 <Button className="flex-1" size="lg">
                   Save Recommendation
                 </Button>
-                <Button variant="outline" className="flex-1" size="lg">
-                  View Details
+                <Button 
+                  variant="outline" 
+                  className="flex-1" 
+                  size="lg"
+                  onClick={() => setShowDetails(!showDetails)}
+                >
+                  {showDetails ? "Hide Details" : "View Details"}
                 </Button>
               </div>
             </div>
