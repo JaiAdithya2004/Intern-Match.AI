@@ -25,16 +25,19 @@ export function RecommendationCard({ recommendation, onClick }: RecommendationCa
               <Badge variant="outline" className="font-semibold text-primary">
                 #{recommendation.rank}
               </Badge>
-              {recommendation.remote && (
+              {recommendation.remote === 1 && (
                 <Badge variant="secondary" className="text-xs">
                   Remote
                 </Badge>
               )}
             </div>
             <h3 className="text-lg font-semibold text-foreground line-clamp-2 mb-2">
-              {recommendation.title || `Internship ${recommendation.internship_id}`}
+              {recommendation.title}
             </h3>
-            {recommendation.domain && <DomainBadge domain={recommendation.domain} />}
+            <DomainBadge domain={recommendation.domain} />
+            <p className="text-xs text-muted-foreground mt-2 line-clamp-2">
+              {recommendation.description}
+            </p>
           </div>
           <Button variant="ghost" size="icon" onClick={(e) => e.stopPropagation()}>
             <Bookmark className="h-5 w-5" />
@@ -46,24 +49,24 @@ export function RecommendationCard({ recommendation, onClick }: RecommendationCa
 
         {/* Details */}
         <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-          {recommendation.stipend && (
-            <div className="flex items-center gap-1">
-              <DollarSign className="h-4 w-4" />
-              <span>₹{recommendation.stipend.toLocaleString()}</span>
-            </div>
-          )}
-          {recommendation.location && (
-            <div className="flex items-center gap-1">
-              <MapPin className="h-4 w-4" />
-              <span>{recommendation.location}</span>
-            </div>
-          )}
-          {recommendation.capacity && (
-            <div className="flex items-center gap-1">
-              <Users className="h-4 w-4" />
-              <span>{recommendation.capacity} spots</span>
-            </div>
-          )}
+          <div className="flex items-center gap-1">
+            <DollarSign className="h-4 w-4" />
+            <span>₹{recommendation.stipend.toLocaleString()}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <MapPin className="h-4 w-4" />
+            <span>{recommendation.state}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Users className="h-4 w-4" />
+            <span>{recommendation.capacity} spots</span>
+          </div>
+        </div>
+        
+        {/* Required Skills */}
+        <div className="pt-2 border-t border-border">
+          <p className="text-xs font-medium text-foreground mb-1">Required Skills:</p>
+          <p className="text-xs text-muted-foreground">{recommendation.required_skills}</p>
         </div>
       </div>
     </Card>

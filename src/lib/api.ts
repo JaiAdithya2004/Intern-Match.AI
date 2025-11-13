@@ -1,15 +1,20 @@
 const API_BASE_URL = "https://hybrid-recommender-api.onrender.com";
 
 export interface Recommendation {
+  student_id: string;
   internship_id: string;
   score: number;
   rank: number;
-  title?: string;
-  domain?: string;
-  stipend?: number;
-  location?: string;
-  capacity?: number;
-  remote?: boolean;
+  title: string;
+  domain: string;
+  stipend: number;
+  state: string;
+  capacity: number;
+  remote: number; // 0 or 1
+  description: string;
+  required_skills: string;
+  min_age: number;
+  max_age: number;
 }
 
 export interface RecommendationResponse {
@@ -28,12 +33,14 @@ export interface Internship {
   internship_id: string;
   title: string;
   domain: string;
-  stipend?: number;
-  location?: string;
-  capacity?: number;
-  remote?: boolean;
-  skills?: string[];
-  description?: string;
+  stipend: number;
+  state: string;
+  capacity: number;
+  remote: number; // 0 or 1
+  description: string;
+  required_skills: string;
+  min_age: number;
+  max_age: number;
 }
 
 export const api = {

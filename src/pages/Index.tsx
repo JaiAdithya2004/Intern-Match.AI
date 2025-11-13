@@ -48,7 +48,7 @@ const Index = () => {
     ? [...recommendationsData.recommendations].sort((a, b) => {
         if (sortBy === "score") return b.score - a.score;
         if (sortBy === "rank") return a.rank - b.rank;
-        if (sortBy === "stipend") return (b.stipend || 0) - (a.stipend || 0);
+        if (sortBy === "stipend") return b.stipend - a.stipend;
         return 0;
       })
     : [];
@@ -201,8 +201,8 @@ const Index = () => {
                 <Badge variant="outline" className="font-semibold text-primary">
                   Rank #{selectedRecommendation.rank}
                 </Badge>
-                {selectedRecommendation.domain && <DomainBadge domain={selectedRecommendation.domain} />}
-                {selectedRecommendation.remote && (
+                <DomainBadge domain={selectedRecommendation.domain} />
+                {selectedRecommendation.remote === 1 && (
                   <Badge variant="secondary">Remote</Badge>
                 )}
               </div>
@@ -210,33 +210,42 @@ const Index = () => {
               <ScoreIndicator score={selectedRecommendation.score} size="lg" />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {selectedRecommendation.stipend && (
-                  <div className="flex items-center gap-2 text-foreground">
-                    <DollarSign className="h-5 w-5 text-muted-foreground" />
-                    <div>
-                      <p className="text-sm text-muted-foreground">Stipend</p>
-                      <p className="font-semibold">₹{selectedRecommendation.stipend.toLocaleString()}</p>
-                    </div>
+                <div className="flex items-center gap-2 text-foreground">
+                  <DollarSign className="h-5 w-5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Stipend</p>
+                    <p className="font-semibold">₹{selectedRecommendation.stipend.toLocaleString()}/month</p>
                   </div>
-                )}
-                {selectedRecommendation.location && (
-                  <div className="flex items-center gap-2 text-foreground">
-                    <MapPin className="h-5 w-5 text-muted-foreground" />
-                    <div>
-                      <p className="text-sm text-muted-foreground">Location</p>
-                      <p className="font-semibold">{selectedRecommendation.location}</p>
-                    </div>
+                </div>
+                <div className="flex items-center gap-2 text-foreground">
+                  <MapPin className="h-5 w-5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Location</p>
+                    <p className="font-semibold">{selectedRecommendation.state} {selectedRecommendation.remote === 1 && "(Remote)"}</p>
                   </div>
-                )}
-                {selectedRecommendation.capacity && (
-                  <div className="flex items-center gap-2 text-foreground">
-                    <UsersIcon className="h-5 w-5 text-muted-foreground" />
-                    <div>
-                      <p className="text-sm text-muted-foreground">Available Spots</p>
-                      <p className="font-semibold">{selectedRecommendation.capacity}</p>
-                    </div>
+                </div>
+                <div className="flex items-center gap-2 text-foreground">
+                  <UsersIcon className="h-5 w-5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Available Spots</p>
+                    <p className="font-semibold">{selectedRecommendation.capacity}</p>
                   </div>
-                )}
+                </div>
+              </div>
+
+              <div className="space-y-4 border-t pt-4">
+                <div>
+                  <h4 className="text-sm font-semibold mb-2">Description</h4>
+                  <p className="text-sm text-muted-foreground">{selectedRecommendation.description}</p>
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold mb-2">Required Skills</h4>
+                  <p className="text-sm text-muted-foreground">{selectedRecommendation.required_skills}</p>
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold mb-2">Age Requirements</h4>
+                  <p className="text-sm text-muted-foreground">{selectedRecommendation.min_age} - {selectedRecommendation.max_age} years</p>
+                </div>
               </div>
 
               <div className="flex gap-3">
