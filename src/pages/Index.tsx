@@ -214,7 +214,7 @@ const Index = () => {
                   <DollarSign className="h-5 w-5 text-muted-foreground" />
                   <div>
                     <p className="text-sm text-muted-foreground">Stipend</p>
-                    <p className="font-semibold">₹{selectedRecommendation.stipend.toLocaleString()}/month</p>
+                    <p className="font-semibold">{selectedRecommendation.stipend.toLocaleString()}/month</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 text-foreground">
@@ -235,10 +235,6 @@ const Index = () => {
 
               <div className="space-y-4 border-t pt-4">
                 <div>
-                  <h4 className="text-sm font-semibold mb-2">Description</h4>
-                  <p className="text-sm text-muted-foreground">{selectedRecommendation.description}</p>
-                </div>
-                <div>
                   <h4 className="text-sm font-semibold mb-2">Required Skills</h4>
                   <p className="text-sm text-muted-foreground">{selectedRecommendation.required_skills}</p>
                 </div>
@@ -252,9 +248,10 @@ const Index = () => {
                 <Button className="flex-1" size="lg">
                   Save Recommendation
                 </Button>
-                <Button variant="outline" className="flex-1" size="lg">
-                  View Details
-                </Button>
+                <div className="flex-1 bg-muted/50 rounded-lg p-4">
+                  <h4 className="text-sm font-semibold mb-2">Description</h4>
+                  <p className="text-sm text-muted-foreground">{selectedRecommendation.description}</p>
+                </div>
               </div>
             </div>
           )}
